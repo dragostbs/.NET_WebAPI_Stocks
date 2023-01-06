@@ -1,6 +1,6 @@
 # .NET Web API 📀
 
-.NET Web API Application to interact extarnally via HTTP request methods
+.NET Web API Application with Swagger, to interact extarnally via HTTP request methods
 
 ## Built and Tested with
 
