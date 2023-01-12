@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FinancialsAPI.Data;
 using FinancialsAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FinancialsAPI.Controllers
 {
@@ -22,6 +23,7 @@ namespace FinancialsAPI.Controllers
         }
 
         // GET: api/Transactions
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Transaction>>> GetTransactions()
         {
@@ -29,6 +31,7 @@ namespace FinancialsAPI.Controllers
         }
 
         // GET: api/Transactions/5
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Transaction>> GetTransaction(int id)
         {
@@ -45,6 +48,7 @@ namespace FinancialsAPI.Controllers
         // PUT: api/Transactions/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTransaction(int id, Transaction transaction)
         {
@@ -77,6 +81,7 @@ namespace FinancialsAPI.Controllers
         // POST: api/Transactions
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Transaction>> PostTransaction(Transaction transaction)
         {
@@ -87,6 +92,7 @@ namespace FinancialsAPI.Controllers
         }
 
         // DELETE: api/Transactions/5
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Transaction>> DeleteTransaction(int id)
         {

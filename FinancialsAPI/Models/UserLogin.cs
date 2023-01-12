@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace FinancialsAPI.Models
 {
-    public class User
+    public class UserLogin
     {
-        public int Id { get; set; }
-
+        [Required]
         [StringLength(10)]
-        public string Username { get; set; } = string.Empty;
+        public string Username { get; set; } 
+
+        [Required]
+        [StringLength(20)]
+        public string Password { get; set; }
     }
 }

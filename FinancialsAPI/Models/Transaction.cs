@@ -12,17 +12,15 @@ namespace FinancialsAPI.Models
         [Key]
         public int Id { get; set; }
 
+        [Required]
         [StringLength(5)]
-        public string Result { get; set; } = string.Empty;
+        public string Result { get; set; } 
 
         public DateTime Date { get; set; }
-
-        public int UserId { get; set; }
 
         public int StockId { get; set; }
 
         #nullable enable
-        public User? User { get; set; }
 
         public Stock? Stock { get; set; }
     }

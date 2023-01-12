@@ -12,6 +12,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using FinancialsAPI.Token;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace FinancialsAPI
 {
@@ -40,10 +45,41 @@ namespace FinancialsAPI
                 });
             });
 
+            // JWT Token
+            services.AddScoped<IJWTTokenGenerator, JWTTokenGenerator>();
+
             // Add DbContext
             services.AddDbContext<Data.DataContext>(opt =>
             {
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            // Identity
+            services.AddIdentity<IdentityUser, IdentityRole>(opt =>
+            {
+                opt.Password.RequireDigit = false;
+                opt.Password.RequireLowercase = false;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireUppercase = false;
+                opt.User.RequireUniqueEmail = true;
+            }
+            ).AddEntityFrameworkStores<Data.DataContext>();
+
+            // Token Authentication configuration
+            services.AddAuthentication(config => {
+                config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(opt =>
+            {
+                opt.RequireHttpsMetadata = false;
+                opt.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:Key"])),
+                    ValidIssuer = Configuration["Token:Issuer"],
+                    ValidateIssuer = true,
+                    ValidateAudience = false,
+                };
             });
 
             // CORS
@@ -79,6 +115,9 @@ namespace FinancialsAPI
                 // To serve SwaggerUI at application's root page, set the RoutePrefix property to an empty string.
                 c.RoutePrefix = string.Empty;
             });
+
+            // For Identity
+            app.UseAuthentication();
 
             // Use CORS
             app.UseCors("_myAllowSecificOrigins");
