@@ -9,6 +9,7 @@ using FinancialsAPI.Data;
 using FinancialsAPI.Models;
 using Microsoft.AspNetCore.Identity;
 using FinancialsAPI.Token;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FinancialsAPI.Controllers
 {
@@ -22,7 +23,8 @@ namespace FinancialsAPI.Controllers
 
         private readonly IJWTTokenGenerator _jwtToken;
 
-        public IdentityUserController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IJWTTokenGenerator jwtToken)
+
+        public IdentityUserController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IJWTTokenGenerator jwtToken, DataContext dataContext)
         {
             _jwtToken = jwtToken;
             _signInManager = signInManager;

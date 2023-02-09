@@ -20,8 +20,12 @@ namespace FinancialsAPI.Models
 
         public int StockId { get; set; }
 
+        /*public int UserLoginId { get; set; }*/
+
         #nullable enable
 
         public Stock? Stock { get; set; }
+
+       /* public UserLogin? UserLogin { get; set; }*/
     }
 }

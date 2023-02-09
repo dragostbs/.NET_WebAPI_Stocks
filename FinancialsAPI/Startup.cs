@@ -85,12 +85,13 @@ namespace FinancialsAPI
             // CORS
             services.AddCors(opt =>
             {
-                opt.AddPolicy(name: "_myAllowSecificOrigins", 
+                opt.AddPolicy(name: "_myAllowSecificOrigins",
                     builedr =>
                     {
                         builedr.WithOrigins("http://localhost:4200")
                         .AllowAnyMethod()
-                        .AllowAnyHeader();
+                        .AllowAnyHeader()
+                        .AllowAnyOrigin();
                     }
                 );
             });
