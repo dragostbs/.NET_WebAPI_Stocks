@@ -172,7 +172,7 @@ namespace FinancialsAPI.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Result = table.Column<string>(maxLength: 5, nullable: false),
+                    Result = table.Column<string>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
                     StockId = table.Column<int>(nullable: false)
                 },

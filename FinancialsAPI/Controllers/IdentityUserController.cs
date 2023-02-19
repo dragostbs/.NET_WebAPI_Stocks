@@ -81,5 +81,12 @@ namespace FinancialsAPI.Controllers
 
             return BadRequest(result);
         }
+
+        [HttpGet("users")]
+        public async Task<IActionResult> GetUsers()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            return Ok(users);
+        }
     }
 }

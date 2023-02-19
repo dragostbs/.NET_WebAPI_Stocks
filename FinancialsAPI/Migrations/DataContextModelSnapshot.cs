@@ -51,8 +51,7 @@ namespace FinancialsAPI.Migrations
 
                     b.Property<string>("Result")
                         .IsRequired()
-                        .HasColumnType("nvarchar(5)")
-                        .HasMaxLength(5);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StockId")
                         .HasColumnType("int");

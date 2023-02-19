@@ -15,5 +15,7 @@ namespace FinancialsAPI.Data
         public DbSet<Transaction> Transactions { get; set; }
 
         public DbSet<Stock> Stocks { get; set; }
+
+        // public DbSet<UserLogin> UserLogin { get; set; }
     }
 }

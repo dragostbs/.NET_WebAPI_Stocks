@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,6 +9,9 @@ namespace FinancialsAPI.Models
 {
     public class UserLogin
     {
+        [Key]
+        public int Id { get; set; }
+
         [Required]
         [StringLength(10)]
         public string Username { get; set; } 

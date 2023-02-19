@@ -16,6 +16,6 @@ namespace FinancialsAPI.Models
         public string Symbol { get; set; } 
 
         [Required]
-        public float Price { get; set; }
+        public float Price { get; set; } 
     }
 }

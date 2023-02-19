@@ -13,19 +13,18 @@ namespace FinancialsAPI.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(5)]
-        public string Result { get; set; } 
+        public string Result { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } 
 
         public int StockId { get; set; }
 
-        /*public int UserLoginId { get; set; }*/
+       // public int UserId { get; set; }
 
         #nullable enable
 
         public Stock? Stock { get; set; }
 
-       /* public UserLogin? UserLogin { get; set; }*/
+       // public UserLogin? User { get; set; }
     }
 }
