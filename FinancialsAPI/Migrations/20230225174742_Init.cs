@@ -39,7 +39,8 @@ namespace FinancialsAPI.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -174,7 +175,8 @@ namespace FinancialsAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Result = table.Column<string>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
-                    StockId = table.Column<int>(nullable: false)
+                    StockId = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -185,6 +187,12 @@ namespace FinancialsAPI.Migrations
                         principalTable: "Stocks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Transactions_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -230,6 +238,11 @@ namespace FinancialsAPI.Migrations
                 name: "IX_Transactions_StockId",
                 table: "Transactions",
                 column: "StockId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transactions_UserId",
+                table: "Transactions",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -256,10 +269,10 @@ namespace FinancialsAPI.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Stocks");
 
             migrationBuilder.DropTable(
-                name: "Stocks");
+                name: "AspNetUsers");
         }
     }
 }

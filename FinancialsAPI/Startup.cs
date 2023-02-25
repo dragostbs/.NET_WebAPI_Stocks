@@ -17,6 +17,9 @@ using FinancialsAPI.Token;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using FinancialsAPI.Interfaces;
+using FinancialsAPI.Repository;
+using FinancialsAPI.AutoMapper;
 
 namespace FinancialsAPI
 {
@@ -33,6 +36,12 @@ namespace FinancialsAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            // Use AutoMapper
+            services.AddAutoMapper(typeof(Mapper).Assembly);
+
+            // Unit Of Work
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Swagger
             services.AddSwaggerGen(c =>
