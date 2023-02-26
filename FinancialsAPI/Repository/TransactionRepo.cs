@@ -18,9 +18,12 @@ namespace FinancialsAPI.Repository
             this.context = context;
         }
 
-        public async Task<IEnumerable<Transaction>> GetTransactionsAsync()
+        public async Task<IEnumerable<Transaction>> GetTransactionsAsync(string userId)
         {
-            return await context.Transactions.ToListAsync();
+            return await context.Transactions
+                .Include(t => t.Stock)
+                .Where(t => t.UserId == userId)
+                .ToListAsync();
         }
 
         public void AddTransaction(Transaction transaction)

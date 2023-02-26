@@ -8,7 +8,7 @@ namespace FinancialsAPI.Interfaces
 {
     public interface ITransaction
     {
-        Task<IEnumerable<Transaction>> GetTransactionsAsync();
+        Task<IEnumerable<Transaction>> GetTransactionsAsync(string userId);
         void AddTransaction(Transaction transaction);
         void DeleteTransaction(int transactionId);
     }

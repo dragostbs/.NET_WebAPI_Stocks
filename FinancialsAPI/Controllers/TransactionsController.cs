@@ -9,6 +9,7 @@ using AutoMapper;
 using FinancialsAPI.DTO;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FinancialsAPI.Controllers
 {
@@ -17,29 +18,28 @@ namespace FinancialsAPI.Controllers
     public class TransactionsController : ControllerBase
     {
         private readonly IUnitOfWork uow;
-        private readonly IMapper mapper;
-        private readonly UserManager<IdentityUser> _userManager;
 
-        public TransactionsController(IUnitOfWork uow, IMapper mapper, UserManager<IdentityUser> userManager)
+        public TransactionsController(IUnitOfWork uow)
         {
             this.uow = uow;
-            this.mapper = mapper;
-            _userManager = userManager;
         }
 
         // GET
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetTransactions()
         {
-            var transactions = await uow.Transaction.GetTransactionsAsync();
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var transactions = await uow.Transaction.GetTransactionsAsync(userId);
             return Ok(transactions);
         }
 
         // POST
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddTransaction(TransactionDto transactionDto)
         {
-            var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             var stock = new Stock
             {
@@ -54,7 +54,7 @@ namespace FinancialsAPI.Controllers
                 Result = transactionDto.Result,
                 Date = transactionDto.Date,
                 StockId = stock.Id,
-                UserId = user?.ToString(), // "90bbb102-e730-4fd3-8f19-4dd5320895ce"
+                UserId = userId.ToString(), 
             };
 
             uow.Transaction.AddTransaction(transaction);
@@ -64,6 +64,7 @@ namespace FinancialsAPI.Controllers
 
         // DELETE
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteTransaction(int id)
         {
             uow.Transaction.DeleteTransaction(id);
