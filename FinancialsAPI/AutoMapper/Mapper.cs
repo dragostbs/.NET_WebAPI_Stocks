@@ -14,9 +14,9 @@ namespace FinancialsAPI.AutoMapper
         {
             CreateMap<Transaction, TransactionDto>().ReverseMap();
 
-            CreateMap<TransactionDto, Transaction>()
+           /* CreateMap<TransactionDto, Transaction>()
                 .ForMember(s => s.Stock, opt => opt.MapFrom(src => src.Symbol))
-                .ForMember(p => p.Stock, opt => opt.MapFrom(src => src.Price));
+                .ForMember(p => p.Stock, opt => opt.MapFrom(src => src.Price));*/
         }
     }
 }

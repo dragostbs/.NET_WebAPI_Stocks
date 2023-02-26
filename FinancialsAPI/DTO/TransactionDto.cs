@@ -18,6 +18,5 @@ namespace FinancialsAPI.DTO
         public string Symbol { get; set; }
 
         public float Price { get; set; }
-
     }
 }

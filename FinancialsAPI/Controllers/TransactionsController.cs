@@ -17,11 +17,13 @@ namespace FinancialsAPI.Controllers
     public class TransactionsController : ControllerBase
     {
         private readonly IUnitOfWork uow;
+        private readonly IMapper mapper;
         private readonly UserManager<IdentityUser> _userManager;
 
         public TransactionsController(IUnitOfWork uow, IMapper mapper, UserManager<IdentityUser> userManager)
         {
             this.uow = uow;
+            this.mapper = mapper;
             _userManager = userManager;
         }
 
@@ -35,14 +37,25 @@ namespace FinancialsAPI.Controllers
 
         // POST
         [HttpPost]
-        public async Task<IActionResult> AddTransaction(Transaction transaction)
+        public async Task<IActionResult> AddTransaction(TransactionDto transactionDto)
         {
-            /*var user = await _userManager.GetUserAsync(User);
+            var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var stock = new Stock
+            {
+                Symbol = transactionDto.Symbol,
+                Price = transactionDto.Price
+            };
+            uow.Stock.AddStock(stock);
+            await uow.SaveAsync();
+
             var transaction = new Transaction
             {
                 Result = transactionDto.Result,
-                UserId = user.Id
-            };*/
+                Date = transactionDto.Date,
+                StockId = stock.Id,
+                UserId = user?.ToString(), // "90bbb102-e730-4fd3-8f19-4dd5320895ce"
+            };
 
             uow.Transaction.AddTransaction(transaction);
             await uow.SaveAsync();

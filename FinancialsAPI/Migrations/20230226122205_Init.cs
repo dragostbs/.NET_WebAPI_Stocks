@@ -176,7 +176,7 @@ namespace FinancialsAPI.Migrations
                     Result = table.Column<string>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
                     StockId = table.Column<int>(nullable: false),
-                    UserId = table.Column<string>(nullable: true)
+                    UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -192,7 +192,7 @@ namespace FinancialsAPI.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

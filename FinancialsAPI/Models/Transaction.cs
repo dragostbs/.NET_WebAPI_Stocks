@@ -19,13 +19,13 @@ namespace FinancialsAPI.Models
 
         public int StockId { get; set; }
 
+        [Required]
         public string UserId { get; set; }
 
-        #nullable enable
-
-        public Stock? Stock { get; set; }
+        [ForeignKey("StockId")]
+        public Stock Stock { get; set; }
 
         [ForeignKey("UserId")]
-        public User? User { get; set; }
+        public User User { get; set; }
     }
 }
