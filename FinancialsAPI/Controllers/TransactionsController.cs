@@ -17,6 +17,7 @@ namespace FinancialsAPI.Controllers
     [ApiController]
     public class TransactionsController : ControllerBase
     {
+        private string userId { get { return User.FindFirst(ClaimTypes.NameIdentifier).Value; } }
         private readonly IUnitOfWork uow;
 
         public TransactionsController(IUnitOfWork uow)
@@ -29,7 +30,6 @@ namespace FinancialsAPI.Controllers
         [Authorize]
         public async Task<IActionResult> GetTransactions()
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var transactions = await uow.Transaction.GetTransactionsAsync(userId);
             return Ok(transactions);
         }
@@ -39,8 +39,6 @@ namespace FinancialsAPI.Controllers
         [Authorize]
         public async Task<IActionResult> AddTransaction(TransactionDto transactionDto)
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
             var stock = new Stock
             {
                 Symbol = transactionDto.Symbol,

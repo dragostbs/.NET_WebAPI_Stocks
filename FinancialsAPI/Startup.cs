@@ -38,7 +38,7 @@ namespace FinancialsAPI
             services.AddControllers();
 
             // Use AutoMapper
-            services.AddAutoMapper(typeof(Mapper).Assembly);
+            // services.AddAutoMapper(typeof(Mapper).Assembly);
 
             // Unit Of Work
             services.AddScoped<IUnitOfWork, UnitOfWork>();
